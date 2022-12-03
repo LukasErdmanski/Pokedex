@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modalCardBottom.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modalCardBottom.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//#region ============================== SET MODAL CARD BOTTOM ==============================
+/**
+ * Sets the bottom of the modal card..
+ */
+function setModalCardBottom() {
+  setAbout();
+  setBaseStats();
+  setEvolution();
+  setMoves();
+}
+
+//#region ============================== ABOUT ==============================
+/**
+ * Sets the about tab's content.
+ */
+async function setAbout() {
+  getElem('aboutDescription').innerHTML = getDescriptionForAbout();
+  getElem('pokedexDataHeadline').style.color = colours[`${selectedType}`];
+  getElem('species').innerHTML = await getSpecies();
+  getElem('height').innerHTML = `${convertToStringReplaceDotWithComma(selectedPokemon.height / 10)} m`;
+  getElem('weight').innerHTML = `${convertToStringReplaceDotWithComma(selectedPokemon.weight / 10)} kg`;
+  genAbilities();
+}
+
+/**
+ * Returns the description of the selected pokemon.
+ * @returns {string} The description of the selected pokemon.
+ */
+function getDescriptionForAbout() {
+  let foundedElement = pokemonSpecies[selectedPokemonIndex].flavor_text_entries.find((n) => n.language.name == 'en');
+  let stringWITHBackspaceControlCharacter = foundedElement.flavor_text;
+  let stringWITHOUTBackspaceControlCharacter = stringWITHBackspaceControlCharacter.replaceAll(/[\b\f\n\r\t\v]/g, ' ');
+  return stringWITHOUTBackspaceControlCharacter;
+}
+
+/**
+ * Returns the species of the selected pokemon.
+ * @returns {string} The species of the selected pokemon.
+ */
+function getSpecies() {
+  let foundedElement = pokemonSpecies[selectedPokemonIndex].genera.find((n) => n.language.name == 'en');
+  return foundedElement.genus;
+}
+
+/**
+ * Convert the height and weight number of the selected pokemon to string and replaces the dot character
+ * with the comma character
+ * @param {number} inputToChange - The number that should be converted and where the dot character should be replaced with the comma character.
+ * @returns {string} The to string converted number (height or weight of the selected pokemon), where the dot character has been replaced with the comma character.
+ */
+function convertToStringReplaceDotWithComma(inputToChange) {
+  let changedText = inputToChange.toString();
+  return changedText.replace('.', ',');
+}
+
+/**
+ * Generates the abilities of the selected pokemon.
+ */
+function genAbilities() {
+  let abilitiesContainer = getElem('abilities');
+  abilitiesContainer.innerHTML = '';
+  selectedPokemon.abilities.forEach((element) => {
+    abilityName = element.ability.name;
+    if (element.is_hidden) {
+      abilityName = `${abilityName} (hidden ability)`;
+    }
+    abilitiesContainer.innerHTML += /* html */ `${abilityName}&lt;br>`;
+  });
+}
+//#endregion ============================== ABOUT ==============================
+
+//#region ============================== BASE STATS ==============================
+/**
+ * Sets the base stats tab's content.
+ */
+async function setBaseStats() {
+  currentBaseStats = [];
+  getElem('baseStatsHeadline').style.color = colours[`${selectedType}`];
+  getValueAndSetColourOfProgressBars();
+  setWidthsOfProgressBars();
+  getElem('typeDefensesHeadline').style.color = colours[`${selectedType}`];
+  getElem('typeDefensesPokemonName').innerHTML = selectedPokemon.name;
+}
+
+/**
+ * Gets the value of the base stats of the selected pokemon and sets the color of the progress bars like the pokemon
+ * type of the selected pokemon.
+ */
+function getValueAndSetColourOfProgressBars() {
+  for (let i = 0; i &lt;= 5; i++) {
+    // Value of one of the six basa stats (like hp, attack etc.).
+    let baseStatsValue = selectedPokemon.stats[i].base_stat;
+    // The value is saved the array of the base stats of the selected pokemon.
+    currentBaseStats.push(baseStatsValue);
+    // Calc the progress bar width with the baseStatsValue as a percantge of the maximum of 200px (equivalent to 100%).
+    let widthOfProgressBar = calcPercentageWidthOfBaseStats(baseStatsValue);
+    // Save the calculated width in 'progressBarWidths' array.
+    widthsOfProgressBars.push(widthOfProgressBar);
+    // Remove the color like the pokoemon type of the previous pokemon opened in the modal card.
+    getElem(`baseStats${i}`).removeAttribute('class');
+    // Add the color like the pokemon type for the selected pokemon opened in the modal card.
+    getElem(`baseStats${i}`).classList.add('prograssBar', `${selectedType}`);
+  }
+}
+
+/**
+ * Calculating the percentage width of the base stats value.
+ * @param {number} baseStatsValue - The value of the base stat.
+ * @returns {string} A string with the percentage value.
+ */
+function calcPercentageWidthOfBaseStats(baseStatsValue) {
+  // 255 is the maximal value of all base stats of all pokemons.
+  let percentage = Math.round((baseStatsValue / 255) * 100);
+  return percentage;
+}
+
+/**
+ * Reset the widths of the progress bars and set the value and width of each progress bar, If the selected tab is the
+ * baseStats tab and the widths of the progress bars have not already been set,
+ */
+function setWidthsOfProgressBars() {
+  if (selectedTabName == 'baseStats' &amp;&amp; !widthsOfPogresBarsAlreadySet) {
+    resetWidthsOfProgressBars();
+    setWidth();
+    setValue();
+    widthsOfPogresBarsAlreadySet = true;
+  }
+}
+
+/**
+ * Resets the widths of the progress bars to 0% and removes the base stat number inside of them.
+ */
+function resetWidthsOfProgressBars() {
+  for (let i = 0; i &lt; widthsOfProgressBars.length; i++) {
+    progressBarElement = getElem(`baseStats${i}`);
+    progressBarElement.style.transition = '';
+    progressBarElement.style.width = '0%';
+    progressBarElement.style.minWidth = '0%';
+    progressBarElement.innerHTML = '';
+  }
+}
+
+/**
+ * Sets the widths of the progress bars.
+ */
+function setWidth() {
+  if (setValueAndWidthIntevall_1) {
+    clearTimeout(setValueAndWidthIntevall_1);
+  }
+  setValueAndWidthIntevall_1 = setTimeout(() => {
+    for (let i = 0; i &lt; widthsOfProgressBars.length; i++) {
+      const ELEMENT = widthsOfProgressBars[i];
+      progressBarElement = getElem(`baseStats${i}`);
+      progressBarElement.style.transition = 'all 1400ms';
+      progressBarElement.style.minWidth = '12%';
+      progressBarElement.style.width = ELEMENT + '%';
+    }
+  }, 10);
+}
+
+/**
+ * Sets the values in the progress bars (base stats of the selected pokemon).
+ */
+function setValue() {
+  if (setValueAndWidthIntevall_2) {
+    clearTimeout(setValueAndWidthIntevall_2);
+  }
+  setValueAndWidthIntevall_2 = setTimeout(() => {
+    for (let i = 0; i &lt; widthsOfProgressBars.length; i++) {
+      progressBarElement = getElem(`baseStats${i}`);
+      progressBarElement.innerHTML = currentBaseStats[i];
+    }
+  }, 150);
+}
+//#endregion ============================== BASE STATS ==============================
+
+//#region ============================== EVOLUTION ==============================
+/**
+ * Sets the evolution tab's content.
+ */
+function setEvolution() {
+  let evolutionContainer = getElem('evolution');
+  evolutionContainer.innerHTML = '';
+  pokemonEvolutionChain = pokemonEvolutionChains[selectedPokemonIndex];
+  for (let i = 1; i &lt; pokemonEvolutionChain.length; i++) {
+    let pokemonLeft = pokemonEvolutionChain[i - 1];
+    let pokemonRight = pokemonEvolutionChain[i];
+    let dataForEvoLine = prepareDataForGentHTMLEvoLine(pokemonLeft, pokemonRight);
+    evolutionContainer.innerHTML += createEvoLine(dataForEvoLine, i);
+  }
+}
+
+/**
+ * Returns preparied the data to generate an evolution row in modal card bottom, in tab evolution.
+ * @param {JSON} pokemonLeft - The pokemon from which one evulution step begins.
+ * @param {JSON} pokemonRight - The pokemon till which one evulution step ends.
+ * @returns {JSON} The prepared data object with certain properties to generate an evolution row.
+ */
+function prepareDataForGentHTMLEvoLine(pokemonLeft, pokemonRight) {
+  let data = {
+    srcPokemonLeft: setSpritePath(pokemonLeft),
+    indexInAllPokemonsPokemonLeft: pokemonLeft.id - 1,
+    namePokemonLeft: pokemonLeft.name,
+    type: pokemonLeft.types[0].type.name,
+    srcPokemonRight: setSpritePath(pokemonRight),
+    indexInAllPokemonsPokemonRight: pokemonRight.id - 1,
+    namePokemonRight: pokemonRight.name,
+  };
+  return data;
+}
+
+/**
+ * Returns a string of HTML containing an evolution row in modal card bottom, in tab evolution.
+ * @param {any} data - The prepared data object with certain properties to generate an evolution row.
+ * @param {number} i - The index of the evolution line.
+ * @returns {HTMLElement} The strinf of HTML code containing evolution row.
+ */
+function createEvoLine(data, i) {
+  return /* html */ `
+      &lt;div id="evoLine${i}" class="evoLine">
+        &lt;div class="evoPokemonName">
+          &lt;div class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonLeft})">
+            &lt;img class="cp" src="${data.srcPokemonLeft}" />
+          &lt;/div>
+          &lt;div class="evoNameContainer cp" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonLeft})">
+            &lt;div class="evoName ${data.type}">${data.namePokemonLeft}&lt;/div>
+          &lt;/div>
+        &lt;/div>
+  
+        &lt;div class="evoRightArrowLevel">
+          &lt;img class="evoRightArrow cp" src="img/arrow-right.png" />
+        &lt;/div>
+  
+        &lt;div class="evoPokemonName">
+          &lt;div class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonRight})">
+            &lt;img class="cp" src="${data.srcPokemonRight}" />
+          &lt;/div>
+          &lt;div class="evoNameContainer cp" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonRight})">
+            &lt;div class="evoName ${data.type}">${data.namePokemonRight}&lt;/div>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+    `;
+}
+
+/**
+ * Changes the current displayd pokemon in the modal card, if the selected pokemon from the evolution tab
+ * is different as the current display pokemon in the modal card, by changing the selected pokemon index
+ * and checking before, if the selected pokemon is already present.
+ * @param indexInAllPokemons - The index of the pokemon in the allPokemons array.
+ */
+async function changeToPokemonFromEvolutionChain(indexInAllPokemons) {
+  if (selectedPokemonIndex != indexInAllPokemons) {
+    selectedPokemonIndex = indexInAllPokemons;
+    checkPresenceSelectedPokemon();
+  }
+}
+//#endregion ============================== EVOLUTION ==============================
+
+//#region ============================== MOVES ==============================
+/**
+ * Sets the moves tab's content.
+ */
+function setMoves() {
+  getElem('movesCollection').innerHTML = '';
+  selectedPokemon.moves.forEach((element) => {
+    let moveName = element.move.name;
+    getElem('movesCollection').innerHTML += createMoveLine(moveName);
+  });
+}
+
+/**
+ * Returns string of HTML element containing a row with the star icon and one of the move names of the selected pokemon
+ * in the modal card bottom, in moves tab.
+ * @param {string} move - The given move for which the line with star icon and the move name should be returned.
+ * @returns {HTMLElement} A string of HTML code containing the line with star icon and the move name.
+ */
+function createMoveLine(move) {
+  return /* html */ `
+      &lt;span class="starTextLine">
+        &lt;img src="img/star.png" />
+        &lt;span>${move}&lt;/span>
+      &lt;/span>
+    `;
+}
+//#endregion ============================== MOVES ==============================
+//#endregion ============================== SET MODAL CARD BOTTOM ==============================
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_Fade_In_EffectToModalCard">add_Fade_In_EffectToModalCard</a></li><li><a href="global.html#add_Fade_Out_EffectToModalCard">add_Fade_Out_EffectToModalCard</a></li><li><a href="global.html#addClassesAfterLoadingRendering">addClassesAfterLoadingRendering</a></li><li><a href="global.html#calcPercentageScrolledAmount">calcPercentageScrolledAmount</a></li><li><a href="global.html#calcPercentageWidthOfBaseStats">calcPercentageWidthOfBaseStats</a></li><li><a href="global.html#calcStartAmoutToLoad">calcStartAmoutToLoad</a></li><li><a href="global.html#changePokemon">changePokemon</a></li><li><a href="global.html#changeSelectedPokemonIndex">changeSelectedPokemonIndex</a></li><li><a href="global.html#changeTab">changeTab</a></li><li><a href="global.html#changeToFraction">changeToFraction</a></li><li><a href="global.html#changeToPokemonFromEvolutionChain">changeToPokemonFromEvolutionChain</a></li><li><a href="global.html#checkIfLoadARenderfterScroll">checkIfLoadARenderfterScroll</a></li><li><a href="global.html#checkPresenceSelectedPokemon">checkPresenceSelectedPokemon</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#convertToStringReplaceDotWithComma">convertToStringReplaceDotWithComma</a></li><li><a href="global.html#createCollectionCard">createCollectionCard</a></li><li><a href="global.html#createEvoLine">createEvoLine</a></li><li><a href="global.html#createLoader">createLoader</a></li><li><a href="global.html#createModalCardTopTypeImg">createModalCardTopTypeImg</a></li><li><a href="global.html#createMoveLine">createMoveLine</a></li><li><a href="global.html#createTypeDefense">createTypeDefense</a></li><li><a href="global.html#createTypeWeakness">createTypeWeakness</a></li><li><a href="global.html#disableScrolling">disableScrolling</a></li><li><a href="global.html#enableScrolling">enableScrolling</a></li><li><a href="global.html#errorFetchFctn">errorFetchFctn</a></li><li><a href="global.html#fetchUrlConvertToAndReturnAsJSON">fetchUrlConvertToAndReturnAsJSON</a></li><li><a href="global.html#genAbilities">genAbilities</a></li><li><a href="global.html#genLoader">genLoader</a></li><li><a href="global.html#genMCAllTypeRelatedElements">genMCAllTypeRelatedElements</a></li><li><a href="global.html#genMCBTypeDefenses">genMCBTypeDefenses</a></li><li><a href="global.html#genMCBTypeWeaknesses">genMCBTypeWeaknesses</a></li><li><a href="global.html#genMCTTypeImgs">genMCTTypeImgs</a></li><li><a href="global.html#getDescriptionForAbout">getDescriptionForAbout</a></li><li><a href="global.html#getElem">getElem</a></li><li><a href="global.html#getMCBDamageRelations">getMCBDamageRelations</a></li><li><a href="global.html#getMCBWeaknesses">getMCBWeaknesses</a></li><li><a href="global.html#getSpecies">getSpecies</a></li><li><a href="global.html#getValueAndSetColourOfProgressBars">getValueAndSetColourOfProgressBars</a></li><li><a href="global.html#hideModelCard">hideModelCard</a></li><li><a href="global.html#highlightAndEnlarge_Arrow">highlightAndEnlarge_Arrow</a></li><li><a href="global.html#highlightAndEnlarge_PokemonImg">highlightAndEnlarge_PokemonImg</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#load_first_pokemonInEvoChain">load_first_pokemonInEvoChain</a></li><li><a href="global.html#load_second_pokemonInEvoChain">load_second_pokemonInEvoChain</a></li><li><a href="global.html#load_third_pokemonInEvoChain">load_third_pokemonInEvoChain</a></li><li><a href="global.html#loadEvolutionChain">loadEvolutionChain</a></li><li><a href="global.html#loadPokemon">loadPokemon</a></li><li><a href="global.html#loadRenderLoop">loadRenderLoop</a></li><li><a href="global.html#loadRenderTillEndIndexPlusTen">loadRenderTillEndIndexPlusTen</a></li><li><a href="global.html#loadTypes">loadTypes</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#prepareDataForGentHTMLEvoLine">prepareDataForGentHTMLEvoLine</a></li><li><a href="global.html#removeLoader">removeLoader</a></li><li><a href="global.html#removeScrollEventHandler">removeScrollEventHandler</a></li><li><a href="global.html#renderCollectionCard">renderCollectionCard</a></li><li><a href="global.html#resetWidthsOfProgressBars">resetWidthsOfProgressBars</a></li><li><a href="global.html#scaleDownPokemonImg">scaleDownPokemonImg</a></li><li><a href="global.html#scaleUpPokemonImg">scaleUpPokemonImg</a></li><li><a href="global.html#scrollToStart">scrollToStart</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#searchCondition">searchCondition</a></li><li><a href="global.html#searchForTypeNameFillWeaknesses">searchForTypeNameFillWeaknesses</a></li><li><a href="global.html#searchForTypeNameMultiplicateAmount">searchForTypeNameMultiplicateAmount</a></li><li><a href="global.html#searchForTypeNameSpliceWeaknesses">searchForTypeNameSpliceWeaknesses</a></li><li><a href="global.html#setAbout">setAbout</a></li><li><a href="global.html#setBaseStats">setBaseStats</a></li><li><a href="global.html#setBgLikeType">setBgLikeType</a></li><li><a href="global.html#setEvolution">setEvolution</a></li><li><a href="global.html#setMCBTypeDefensesNumbers">setMCBTypeDefensesNumbers</a></li><li><a href="global.html#setMCTArrowLeft">setMCTArrowLeft</a></li><li><a href="global.html#setMCTNameImg">setMCTNameImg</a></li><li><a href="global.html#setMCTNumber">setMCTNumber</a></li><li><a href="global.html#setModalCard">setModalCard</a></li><li><a href="global.html#setModalCardBottom">setModalCardBottom</a></li><li><a href="global.html#setModalCardTop">setModalCardTop</a></li><li><a href="global.html#setMoves">setMoves</a></li><li><a href="global.html#setSpritePath">setSpritePath</a></li><li><a href="global.html#setValue">setValue</a></li><li><a href="global.html#setWidth">setWidth</a></li><li><a href="global.html#setWidthsOfProgressBars">setWidthsOfProgressBars</a></li><li><a href="global.html#showModelCard">showModelCard</a></li><li><a href="global.html#toggleSearchbar">toggleSearchbar</a></li><li><a href="global.html#toggleVisibilitySearchBarLupeAndScrollArrow">toggleVisibilitySearchBarLupeAndScrollArrow</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Sat Dec 03 2022 10:24:17 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
