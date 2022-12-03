@@ -1,0 +1,61 @@
+@keyframes fadeInFrame {
+  0% {
+    backgpround-dis: transparent;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes fadeInFrame {
+  0% {
+    background-color: transparent;
+    opacity: 0;
+  }
+
+  50% {
+    background-color: #ffcb05;
+  }
+
+  100% {
+    background-color: transparent;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInContent {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutFrame {
+  0% {
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  50% {
+    background-color: #ffcb05;
+  }
+
+  100% {
+    background-color: transparent;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOutContent {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

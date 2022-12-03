@@ -1,0 +1,76 @@
+/* ----------------------------------
+          Modal & Modal Card
+------------------------------------*/
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  transition: all 3226ms ease-in-out;
+}
+
+.modalCard {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+  padding: 4px;
+  border-radius: 50px;
+  width: calc(100vw - 8px);
+  max-width: 500px;
+  box-shadow: 6px -6px 3px 3px rgb(0 0 0 / 23%);
+  height: calc(100% - 8px);
+  box-sizing: border-box;
+  border: 1px solid rgba(245, 245, 245, 0.266);
+}
+
+.fadeInModal {
+  animation-delay: 200ms;
+  animation: fadeInModas 250ms forwards;
+}
+
+.fadeInFrame {
+  animation-delay: 200ms;
+  animation: fadeInFrame 250ms forwards;
+}
+
+.fadeInContent {
+  animation-delay: 200ms;
+  animation: fadeInContent 250ms forwards;
+}
+
+.fadeOutFrame {
+  animation-delay: 200ms;
+  animation: fadeOutFrame 250ms forwards;
+}
+
+.fadeOutContent {
+  animation: fadeOutContent 1s forwards;
+}
+
+.modalCardBgTopBottom {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 50px;
+}
+
+#modalCardTopBottom {
+  height: 100%;
+  width: 100%;
+}
+
+.modalCardBgWithOpacity {
+  box-sizing: border-box;
+  display: flex;
+  border-radius: 50px;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  opacity: 0.93;
+}

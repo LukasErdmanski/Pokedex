@@ -1,0 +1,424 @@
+/* ----------------------------------
+            Modal Card Top
+------------------------------------*/
+.modalCardTop {
+  border-radius: 50px;
+  height: calc(50% - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+.mCTBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 10px 20px 0px 20px;
+  width: 100%;
+  height: 52px;
+}
+
+.mCTNumber {
+  line-height: 28px;
+  font-size: 28px;
+  color: whitesmoke;
+  cursor: default;
+  opacity: 0.8;
+}
+
+.mCTTypeImgsContainer {
+  display: flex;
+}
+
+.mCTTypeImg {
+  width: 38px;
+  opacity: 1;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 245, 245, 0.65);
+}
+
+.mCTPokeballXMark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mCTpokeball {
+  display: none;
+  width: 38px;
+  filter: opacity(0.9);
+  transition: 0.4s;
+  z-index: 6;
+  position: absolute;
+}
+
+.mCTpokeball:hover {
+  filter: opacity(0);
+}
+
+.mCTXMark {
+  padding: 8px;
+  border: 1px;
+  width: 18px;
+  height: 18px;
+  background: #ba2b2b;
+  border-radius: 50%;
+  opacity: 0.9;
+  border: 2px solid rgba(245, 245, 245, 0.65);
+}
+
+.mCTNameLine {
+  display: flex;
+  justify-content: center;
+}
+
+.mCTName {
+  margin: 9px 0 0px 0;
+  font-size: 1.8rem;
+  color: white;
+  opacity: 0.9;
+  text-transform: capitalize;
+}
+
+.mCTArrowsPokoemonImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 29px;
+  gap: 10px;
+  height: calc(100% - 52px - 44px) !important;
+  width: calc(100vw - 58px);
+  max-width: 450px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.mCTArrow {
+  min-width: 50px;
+  width: 12%;
+  object-fit: cover;
+  filter: drop-shadow(15px 2px 5px rgba(46, 46, 46, 0.475));
+  position: absolute;
+  z-index: 6;
+  opacity: 0.8;
+}
+
+.mCTArrowClick {
+  transition: all 150ms ease-in-out;
+  filter: drop-shadow(2px 4px 6px #ffcd05b2);
+  transform: scale(1.2);
+}
+
+.mCTArrowLeft {
+  left: 0;
+}
+
+.mCTArrowRight {
+  right: 0;
+}
+
+.mCTPokoemonImg {
+  height: 110%;
+  filter: drop-shadow(15px 2px 5px rgba(46, 46, 46, 0.475));
+  transition: all 0.4s;
+  object-fit: scale-down;
+  margin-top: -12%;
+}
+
+.mCTPokoemonImgClick {
+  filter: drop-shadow(2px 4px 6px #ffcd05b2);
+  transform: scale(1.2);
+}
+
+/* ----------------------------------
+              Modal Card Bottom
+------------------------------------*/
+.modalCardBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-size: 0.8rem;
+  overflow: auto;
+  height: calc(50% + 50px);
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mCBTabsBar {
+  display: flex;
+  width: 100%;
+  border-radius: 50px 50px 0 0;
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  font-weight: bold;
+}
+
+.mCBTab {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.mCTTabLeft {
+  border-radius: 50px 0 0 0;
+}
+
+.mCTTabRight {
+  border-radius: 0 50px 0 0;
+}
+
+.mCBTab span {
+  border-bottom: 2px solid transparent;
+  text-align: center;
+  height: 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  border-bottom: 2px solid rgb(86, 86, 86) !important;
+}
+
+.mCBContent {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  background-color: white;
+  border-radius: 0 0 50px 50px;
+  overflow: hidden;
+}
+
+.mCBContentFrame {
+  margin: 0 20px 20px 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ----------------------------------
+                Modal About
+------------------------------------*/
+#about p {
+  margin: 2px 0 8px 0;
+  width: 98%;
+  text-align: justify;
+}
+
+#aboutTable,
+#baseStatsTable {
+  width: 100%;
+  -webkit-border-horizontal-spacing: 0px;
+  -webkit-border-vertical-spacing: 7px;
+}
+
+#aboutTable thead th,
+#baseStatsTable thead th,
+.typeDefenses p:first-child {
+  margin: 0px;
+  padding-left: 0px;
+  padding-top: 1px;
+  padding-bottom: 9px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(99, 144, 240);
+  text-align: left;
+}
+
+#aboutTable tbody tr td:first-child,
+#baseStatsTable tbody tr td:first-child {
+  padding-right: 20px;
+  padding-left: 0px;
+  font-weight: bold;
+}
+
+.mCBWeaknessesIcons img {
+  margin-right: 2px;
+  margin-top: 2px;
+  width: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 245, 245, 0.65);
+}
+
+/* ----------------------------------
+              Modal Base Stats
+------------------------------------*/
+#baseStatsTable {
+  width: 97%;
+}
+
+#baseStatsTable tbody tr td:first-child {
+  width: 100px;
+  padding-right: 8px;
+}
+
+.prograssBarContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.prograssBarBg {
+  height: 0.9rem;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgba(211, 211, 211, 0.549);
+  opacity: 0.93;
+}
+
+.prograssBar {
+  height: 0.9rem;
+  border-radius: 8px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+  font-size: 0.75rem;
+  opacity: 0.93;
+  box-sizing: border-box;
+  width: 0%;
+}
+
+.typeDefenses p:nth-child(1) {
+  margin-top: 8px;
+}
+
+.typeDefenses p:nth-child(2) {
+  margin: 0 0 13px 0;
+  width: 97%;
+  text-align: justify;
+}
+
+#typeDefensesPokemonName {
+  text-transform: capitalize;
+}
+
+.typeDefensesCollection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.typeDefenseWithAmount {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 6.6px 8px 0;
+  gap: 4px;
+}
+
+.typeDefenseWithAmount img {
+  width: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 245, 245, 0.65);
+}
+
+/* ----------------------------------
+              Modal Evolution
+------------------------------------*/
+.evolution {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.evoLine {
+  display: flex;
+  justify-content: center;
+  height: 50%;
+  box-sizing: border-box;
+}
+
+.evoPokemonName {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc((100% - 40px) / 2);
+  box-sizing: border-box;
+  display: flex;
+}
+
+.evoNameContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(1.6rem + 4px);
+}
+
+.evoName {
+  padding: 2px 6px;
+  font-weight: 540;
+  color: whitesmoke;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  word-break: break-all;
+}
+
+.evoPokemon {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.evoPokemon img {
+  object-fit: contain;
+  width: 100%;
+  padding-bottom: 6px;
+  box-sizing: border-box;
+  filter: drop-shadow(15px 2px 5px rgba(46, 46, 46, 0.475));
+}
+
+.evoRightArrowLevel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.92em;
+  font-size: bolder;
+  color: black;
+  width: 40px;
+}
+
+.evoRightArrow {
+  width: 2.5em;
+  opacity: 0.79;
+  object-fit: cover;
+  margin-bottom: 3px;
+}
+
+/* ----------------------------------
+                Modal Moves
+------------------------------------*/
+.moves {
+  display: flex;
+  flex: 1;
+}
+
+.starTextLine {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.starTextLine img {
+  width: 24px;
+  margin-right: 24px;
+  filter: drop-shadow(1px 0px 1px black);
+}

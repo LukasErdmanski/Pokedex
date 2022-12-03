@@ -1,0 +1,307 @@
+.dn {
+  display: none !important;
+}
+
+.cp {
+  cursor: pointer;
+}
+
+/* ----------------------------------
+              SCROLLBAR
+------------------------------------*/
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 0;
+}
+
+/* Track style (its color, top and bottom margin)*/
+::-webkit-scrollbar-track {
+  background: rgb(146, 146, 146);
+  margin-block: 4px;
+  border-radius: 2.5px;
+}
+
+/* Handle style (generally its color) */
+::-webkit-scrollbar-thumb {
+  background: rgb(86, 86, 86);
+  border-radius: 2.5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(56, 56, 56);
+}
+
+/* Alternative rule if the browser does not support default scrollbar style */
+@supports (scrollbar-color: rgb(66, 66, 66) rgb(146, 146, 146)) {
+  * {
+    scrollbar-color: rgb(66, 66, 66) rgb(146, 146, 146);
+    scrollbar-width: auto;
+  }
+}
+
+.scrollUpArrow {
+  position: absolute;
+  right: 1.8vh;
+  bottom: 1.8vh;
+  background-image: url('../img/scrollUp-arrow.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid black;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: center;
+}
+
+/* ----------------------------------
+            START LOADER
+------------------------------------*/
+.loadingScreen {
+  z-index: 2;
+  background-color: rgb(36, 36, 36);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-bottom: 2px solid gray;
+  transform: translateY(0%);
+  opacity: 1;
+  transition: all 1.3s ease-in-out;
+}
+
+.loadingScreenloaderContentImgZIndex {
+  z-index: 3;
+}
+
+.translateLoadingScreen {
+  border-bottom: 2px solid whitesmoke;
+  transform: translateY(-100%);
+  opacity: 0.8;
+}
+
+/* ----------------------------------
+                LOADER
+------------------------------------*/
+.loader {
+  margin: 20px;
+  background-color: transparent;
+}
+
+.loaderContent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.loaderContent img {
+  margin-top: 1px;
+  margin-left: 2px;
+  height: 42px;
+  filter: drop-shadow(1px -1px 1px rgb(152, 152, 152));
+  position: absolute;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.lds-roller {
+  opacity: 0.7;
+}
+
+.appAfterStartLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+  transition: all 1.3s ease-in-out;
+  background: white;
+  overflow: scroll;
+  box-sizing: border-box;
+}
+
+.opacity1 {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo img {
+  padding-top: 16px;
+}
+
+.logo span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffcb05;
+  position: relative;
+  top: -10px;
+}
+
+@media (max-width: 440px) {
+  .logo img {
+    width: 250px;
+  }
+}
+
+/* ----------------------------------
+              SEARCH BAR
+------------------------------------*/
+.searchbarContainer {
+  position: fixed;
+  right: 1.8vh;
+  top: 1.8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  opacity: 0.88;
+  z-index: 1;
+}
+
+.searchbar {
+  margin: 16px;
+  border-radius: 8px;
+  padding: 8px;
+  width: 220px;
+  max-width: calc(100vw - 3.6vw - 76px);
+  border-radius: 1rem;
+  padding-right: 32px;
+  border-color: black;
+  transition: width 400ms;
+  font-size: 16px;
+}
+
+.lupeImg {
+  position: absolute;
+  right: 0;
+  background-image: url('../img/lupe.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid black;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: center;
+}
+
+.lupeImgActive {
+  background-color: #ffcb05;
+}
+
+.hide {
+  width: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  transition: all 400ms;
+}
+
+#collection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.card {
+  height: 230px;
+  width: 230px;
+  border-radius: 20px 50px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 6px -6px 3px 3px rgb(0 0 0 / 23%);
+  color: whitesmoke;
+  position: relative;
+  margin: 12px;
+}
+
+.bgImageWithText {
+  position: relative;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  filter: opacity(0.2);
+  overflow: hidden;
+}
+
+.bgImage {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  top: -6px;
+  right: -62px;
+}
+
+.bgImageWithText span {
+  position: absolute;
+  top: -4px;
+  right: -11px;
+  height: 100%;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  color: black;
+  font-weight: 600;
+  margin-top: -3px;
+  text-align: center;
+  opacity: 0.55;
+}
+
+.cardText {
+  position: relative;
+  top: -130px;
+  display: flex;
+  flex-direction: column;
+}
+
+.number {
+  color: black;
+  font-weight: 600;
+  filter: opacity(0.16);
+  margin: 12px 0 0 12px;
+}
+
+.name {
+  padding-top: 6px;
+  padding-left: 28px;
+  font-size: 24px;
+  font-weight: 600;
+  filter: drop-shadow(4px 0px 4px black);
+  opacity: 0.75;
+  text-transform: capitalize;
+}
+
+.pokemonImg {
+  position: relative;
+  left: 6px;
+  top: -124px;
+  margin-top: -52px;
+  filter: drop-shadow(2px 4px 6px black);
+  width: 90%;
+  transition: all 0.225s ease-out;
+}
+
+.pokemonImgScaled {
+  transform: scale(1.2);
+  filter: drop-shadow(2px 4px 6px #ffcd05b2);
+  z-index: 1;
+}

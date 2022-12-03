@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Lukas Pokédex</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/colors.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/modalModalCard.css" />>
+    <link rel="stylesheet" href="css/modalCardTopBottom.css" />>
+    <link rel="stylesheet" href="css/keyframes.css" />
+    <link rel="stylesheet" href="css/media.css"/>
+    <!-- safe-area css -->
+    <link rel=" stylesheet" href="css/safe-area.css" />
+  </head>
+
+  <body onload="init()">
+    <div id="safeArea">
+      <!-- LOADING SCREEN -->
+      <div id="loadingScreen" class="loadingScreen">
+        <div class="loaderContent">
+          <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          <img class="loadingScreenloaderContentImgZIndex" src="img/loading.gif">
+        </div>
+      </div>
+
+      <!-- APP -->
+      <div id="appAfterStartLoading" class="appAfterStartLoading opacity1">
+        <!-- LOGO -->
+        <div class="logo">
+          <img class="logo" src="img/logo_pokemon.png" alt="pokemon logo" />
+          <span>1st Generation</span>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div id="searchbarContainer" class="searchbarContainer">
+          <input
+            id="searchbar"
+            class="searchbar hide"
+            type="text"
+            placeholder="Search for name, type or id."
+            oninput="search()"
+          />
+          <div id="lupe" class="lupeImg cp" onclick="toggleSearchbar()">
+          </div>
+        </div>
+
+        <!-- Pokédex COLLECTION -->
+        <div id="collection"></div>
+        </div>
+
+        <!-- ARROW SCROLL TO TOP -->
+        <div id="scrollUpArrow" class="scrollUpArrow cp" onclick="scrollToStart()">
+        </div>
+
+      <!-- MODAL -->
+      <div id="modal" class="modal dn">
+
+        <!-- Modal Card -->
+        <div id="modalCard" class="modalCard">      
+          <div id="modalCardBgTopBottom" class="modalCardBgTopBottom">
+            
+          <!-- Modal Cart BACKGROUND -->
+            <div id="modalCardBg" class="modalCardBgWithOpacity"></div>
+
+            <!-- Modal Cart TOP BOTTOM -->
+            <div id="modalCardTopBottom" class="">
+
+              <!-- Modal Cart TOP -->
+              <div class="modalCardTop">
+                <div class="mCTBar">
+                  <span id="mCTNumber" class="mCTNumber"></span>
+                  <div id="mCTTypeImgsContainer"></div>
+                  <div class="mCTPokeballXMark cp" onclick="closeModal()">
+                    <img class="mCTpokeball cp" src="img/pokeball.png" />
+                    <img class="mCTXMark cp" src="img/xMark.png" />
+                  </div>
+                </div>
+                <div id="mCTNameLine" class="mCTNameLine">
+                  <h1 id="mCTName" class="mCTName"></h1>
+                </div>
+                <div id="mCTArrowsPokoemonImg" class="mCTArrowsPokoemonImg">
+                    <img id="mCTArrowLeft" class="mCTArrow mCTArrowLeft cp" src="img/left.png" onclick="changePokemon(-1), highlightAndEnlarge_Arrow(this)"/>
+      
+                    <img
+                      id="mCTPokoemonImg"
+                      class="mCTPokoemonImg cp"
+                      src=""
+                      onclick="highlightAndEnlarge_PokemonImg(this)";
+                      />
+
+                    <img id="mCTArrowRight" class="mCTArrow mCTArrowRight cp" src="img/right.png" onclick="changePokemon(1), highlightAndEnlarge_Arrow(this)" />
+                </div>
+              </div>
+
+              <!-- Modal Cart BOTTOM -->
+              <div id="modalCardBottom" class="modalCardBottom">
+
+                <!-- Modal Cart TABS BAR -->
+                <div class="mCBTabsBar">
+                  <div class="mCBTab mCTTabLeft cp" onclick="changeTab('about')">
+                    <span id="aboutTab" class="active">About</span>
+                  </div>
+                  <div class="mCBTab cp" onclick="changeTab('baseStats')">
+                    <span id="baseStatsTab" >Base Stats</span>
+                  </div>
+                  <div class="mCBTab cp" onclick="changeTab('evolution')">
+                    <span id="evolutionTab" >Evolution</span>
+                  </div>
+                  <div class="mCBTab mCTTabRight cp" onclick="changeTab('moves')">
+                    <span id="movesTab" >Moves</span>
+                  </div>
+                </div>
+
+                <!-- Modal Cart BOTTOM CONTENT -->
+                <div class="mCBContent">
+                  <div class="mCBContentFrame">
+
+                    <!-- About -->
+                    <div id="about" class="">
+                      <p id="aboutDescription">
+                      </p>
+                      <table id="aboutTable">
+                        <thead>
+                          <tr>
+                            <!-- 'colspan="2"' sets the with of the table header to 2 columns! -->
+                            <th id="pokedexDataHeadline"colspan="2">Pokédex Data</th>
+                          </tr>
+                        </thead>
+                        <tr>
+                          <td>Species</td>
+                          <td id="species"></td>
+                        </tr>
+                        <tr>
+                          <td>Height</td>
+                          <td id="height"></td>
+                        </tr>
+                        <tr>
+                          <td>Weight</td>
+                          <td id="weight"></td>
+                        </tr>
+                        <tr>
+                          <td>Abilities</td>
+                          <td id="abilities"></td>
+                        </tr>
+                        <tr>
+                          <td>Weaknesses</td>
+                          <td>
+                            <div id="weaknesses" class="mCBWeaknessesIcons">
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <!-- Base Stats -->
+                    <div id="baseStats" class="dn">
+                      <div>
+                        <table id="baseStatsTable">
+                          <thead>
+                            <tr>
+                              <!-- 'colspan="2"' sets the with of the table header to 3 columns! -->
+                              <th id="baseStatsHeadline" colspan="2">Base stats</th>
+                            </tr>
+                          </thead>
+                          <tr>
+                            <td>HP</td>
+                            <td>
+                              <div id="prograssBarContainer0" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats0" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Attack</td>
+                            <td>
+                              <div id="prograssBarContainer1" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats1" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Defense</td>
+                            <td>
+                              <div id="prograssBarContainer2" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats2" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Special Attack</td>
+                            <td>
+                              <div id="prograssBarContainer3" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats3" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Special Defense</td>
+                            <td>
+                              <div id="prograssBarContainer4" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats4" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Speed</strong></td>
+                            <td>
+                              <div id="prograssBarContainer5" class="prograssBarContainer">
+                                <div class="prograssBarBg"></div>
+                                <div id="baseStats5" class="prograssBar"></div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      <div class="typeDefenses">
+                        <p id="typeDefensesHeadline" >Type defenses</p>
+                        <p>The effictiveness of each type on <span id="typeDefensesPokemonName"></span></p>
+                        <div id="typeDefensesCollection" class="typeDefensesCollection">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Evolution -->
+                    <div id="evolution" class="evolution dn">
+                    </div>
+
+                    <!-- Moves -->
+                    <div id="moves" class="moves dn">
+                      <div id="movesCollection">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+    <script src="js/colours.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/loadRender.js"></script>
+    <script src="js/modalCardTop.js"></script>
+    <script src="js/modalCardBottom.js"></script>
+  </body>
+</html>
+

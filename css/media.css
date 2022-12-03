@@ -1,0 +1,27 @@
+@media (min-width: 576px) {
+  .modalCard {
+    max-width: 500px;
+    min-height: 600px;
+    max-height: 800px;
+  }
+}
+
+@media (min-width: 576px) {
+  .mCTpokeball {
+    display: block;
+  }
+
+  .mCBTab:hover span {
+    border-bottom: 2px solid black;
+  }
+}
+
+@media (max-width: 281px) {
+  .mCTTabLeft span {
+    margin-left: 8px;
+  }
+
+  .mCTTabRight span {
+    margin-right: 8px;
+  }
+}
