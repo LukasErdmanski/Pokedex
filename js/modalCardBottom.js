@@ -215,12 +215,14 @@ function prepareDataForGentHTMLEvoLine(pokemonLeft, pokemonRight) {
  * @param {number} i - The index of the evolution line.
  * @returns {HTMLElement} The strinf of HTML code containing evolution row.
  */
+
+scaleUpPokemonImg;
 function createEvoLine(data, i) {
   return /* html */ `
       <div id="evoLine${i}" class="evoLine">
         <div class="evoPokemonName">
-          <div class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonLeft})">
-            <img class="cp" src="${data.srcPokemonLeft}" />
+          <div id="evoLine${i}_pokemonLeftImg_Div" class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonLeft}), highlightAndEnlarge_evo_pokemonImg_onClick('evoLine${i}_pokemonLeftImg_Div')">
+            <img class="cp" src="${data.srcPokemonLeft}" onmouseover="highlightAndEnlarge_evo_pokemonImg_onMouse_Over('evoLine${i}_pokemonLeftImg_Div')" onmouseout="highlightAndEnlarge_evo_pokemonImg_onMouse_Out('evoLine${i}_pokemonLeftImg_Div')"/>
           </div>
           <div class="evoNameContainer cp" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonLeft})">
             <div class="evoName ${data.type}">${data.namePokemonLeft}</div>
@@ -232,8 +234,8 @@ function createEvoLine(data, i) {
         </div>
   
         <div class="evoPokemonName">
-          <div class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonRight})">
-            <img class="cp" src="${data.srcPokemonRight}" />
+          <div id="evoLine${i}_pokemonRightImg_Div" class="evoPokemon" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonRight}, highlightAndEnlarge_evo_pokemonImg_onClick('evoLine${i}_pokemonRightImg_Div'))">
+            <img class="cp" src="${data.srcPokemonRight}" onmouseover="highlightAndEnlarge_evo_pokemonImg_onMouse_Over('evoLine${i}_pokemonRightImg_Div')" onmouseout="highlightAndEnlarge_evo_pokemonImg_onMouse_Out('evoLine${i}_pokemonRightImg_Div')"/>
           </div>
           <div class="evoNameContainer cp" onclick="changeToPokemonFromEvolutionChain(${data.indexInAllPokemonsPokemonRight})">
             <div class="evoName ${data.type}">${data.namePokemonRight}</div>
@@ -244,17 +246,51 @@ function createEvoLine(data, i) {
 }
 
 /**
+ * Highlights and enlarges the pokemon image in the modal card, in tab evolution by clickig on it.
+ * @param {HTMLElement} element - The HTML element that should be highlighted and enlarged.
+ */
+function highlightAndEnlarge_evo_pokemonImg_onClick(element) {
+  lastScaled.classList.remove('evoPokemonImgScaled');
+  getElem(element).classList.add('evoPokemonImgScaled');
+  if (highlightAndEnlarge_evo_pokemonImg_intervall) {
+    clearTimeout(highlightAndEnlarge_evo_pokemonImg_intervall);
+  }
+  highlightAndEnlarge_evo_pokemonImg_intervall = setTimeout(() => {
+    getElem(element).classList.remove('evoPokemonImgScaled');
+  }, 111);
+}
+
+/**
+ * Highlights and enlarges the pokemon image in the modal card, in tab evolution, when the mouse hovered over it.
+ * @param {HTMLElement} element - The HTML element that should be enlarged.
+ */
+function highlightAndEnlarge_evo_pokemonImg_onMouse_Over(element) {
+  getElem(element).classList.add('evoPokemonImgScaled');
+  lastScaled = getElem(element);
+}
+
+/**
+ * Reduces the current enlarged pokemon image in the modal card, in tab evolution, when the mouse leaved its area.
+ */
+function highlightAndEnlarge_evo_pokemonImg_onMouse_Out() {
+  lastScaled.classList.remove('evoPokemonImgScaled');
+}
+
+/**
  * Changes the current displayd pokemon in the modal card, if the selected pokemon from the evolution tab
  * is different as the current display pokemon in the modal card, by changing the selected pokemon index
  * and checking before, if the selected pokemon is already present.
  * @param indexInAllPokemons - The index of the pokemon in the allPokemons array.
  */
 async function changeToPokemonFromEvolutionChain(indexInAllPokemons) {
-  if (selectedPokemonIndex != indexInAllPokemons) {
-    selectedPokemonIndex = indexInAllPokemons;
-    checkPresenceSelectedPokemon();
-  }
+  setTimeout(() => {
+    if (selectedPokemonIndex != indexInAllPokemons) {
+      selectedPokemonIndex = indexInAllPokemons;
+      checkPresenceSelectedPokemon();
+    }
+  }, 221);
 }
+
 //#endregion ============================== EVOLUTION ==============================
 
 //#region ============================== MOVES ==============================

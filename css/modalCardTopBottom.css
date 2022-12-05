@@ -109,7 +109,7 @@
 }
 
 .mCTArrowClick {
-  transition: all 150ms ease-in-out;
+  transition: all 110ms ease-in-out;
   filter: drop-shadow(2px 4px 6px #ffcd05b2);
   transform: scale(1.2);
 }
@@ -374,6 +374,7 @@
   justify-content: center;
   width: 100%;
   overflow: hidden;
+  transition: all 0.11s ease-out;
 }
 
 .evoPokemon img {
@@ -381,7 +382,12 @@
   width: 100%;
   padding-bottom: 6px;
   box-sizing: border-box;
-  filter: drop-shadow(15px 2px 5px rgba(46, 46, 46, 0.475));
+  filter: drop-shadow(1px 1px 3px rgba(46, 46, 46, 0.475));
+}
+
+.evoPokemonImgScaled {
+  filter: drop-shadow(3px 3px 6px #ffcd05b2);
+  transform: scale(1.08);
 }
 
 .evoRightArrowLevel {

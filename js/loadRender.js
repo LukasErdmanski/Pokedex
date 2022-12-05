@@ -4,14 +4,11 @@
  * @returns  {number} The number of cards to load.
  */
 function calcStartAmoutToLoad() {
-  let displayArea = window.innerHeight * window.innerWidth;
+  let displayArea = window.innerWidth * window.innerHeight;
+  let logoArea = window.innerWidth * 122;
   let collectionCardArea = 230 * 230;
-  let result = displayArea / collectionCardArea;
-  if (result <= 15) {
-    return 15;
-  } else {
-    return result * 1.2;
-  }
+  let result = Math.ceil((displayArea - logoArea) / collectionCardArea);
+  return result;
 }
 
 /**
@@ -129,6 +126,8 @@ function showModelCard() {
 /**
  * Loads and renders pokemons to the end of the loop, and if the selected pokemon is present in the current loop,
  * it renders the modal card.
+ * Hides the start loading screen and shows the pokemon card collection when the current load id of pokemon is equal to
+ * 'amoutToLoadRender'.
  */
 async function loadRenderLoop() {
   let newStartLoadRenderIndex = allPokemons.length + 1;
@@ -137,6 +136,9 @@ async function loadRenderLoop() {
       if (loadId == 905) {
         // If the last pokemon loaded, remove the scoll event listener (checking if next pokemons should be loaded).
         removeScrollEventHandler();
+      }
+      if (loadId == amoutToLoadRender) {
+        addClassesAfterLoadingRendering();
       }
       let pokemon = await loadPokemon(loadId);
       renderCollectionCard(pokemon, loadId - 1);

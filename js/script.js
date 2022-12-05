@@ -23,6 +23,7 @@ let changePokoemonImgSizeIntervall;
 let changePokemonInterval;
 let setValueAndWidthIntevall_1;
 let setValueAndWidthIntevall_2;
+let highlightAndEnlarge_evo_pokemonImg_intervall;
 
 const APP_AFTER_START_LOADING = document.getElementById('appAfterStartLoading');
 
@@ -35,7 +36,6 @@ async function init() {
   let newEndLoadRenderIndex = lastEndLoadRenderIndex + amoutToLoadRender;
   await loadTypes();
   await loadRenderTillEndIndexPlusTen(newEndLoadRenderIndex);
-  await addClassesAfterLoadingRendering();
 }
 
 /**
@@ -67,9 +67,7 @@ function scaleUpPokemonImg(element) {
  * Reduces the current enlarged pokemon image of the collection card, when the mouse leaved its area.
  */
 function scaleDownPokemonImg() {
-  if (!modalCardIsOpen) {
-    lastScaled.classList.remove('pokemonImgScaled');
-  }
+  lastScaled.classList.remove('pokemonImgScaled');
 }
 
 /**
@@ -174,6 +172,26 @@ function enableScrolling() {
   BODY.style.removeProperty('top');
   BODY.style.removeProperty('width');
   window.scrollTo(0, scrollPosition);
+}
+
+/**
+ * Closes the modal, if the pressed key is the escape key.
+ * Changes the pokemon in the opened modal card, if the pressed key is the left or right arrow key.
+ * @param {event} - The given event object after pressing any key on the keyboard.
+ */
+function closeModalOrChangePekomenOnKeyDown(event) {
+  let pressedKey = event.key;
+  if (pressedKey == 'Escape') {
+    closeModal();
+  }
+  if (pressedKey == 'ArrowLeft') {
+    changePokemon(-1);
+    highlightAndEnlarge_Arrow(mCTArrowLeft);
+  }
+  if (pressedKey == 'ArrowRight') {
+    changePokemon(+1);
+    highlightAndEnlarge_Arrow(mCTArrowRight);
+  }
 }
 
 /**

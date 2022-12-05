@@ -19,7 +19,7 @@
     <link rel=" stylesheet" href="css/safe-area.css" />
   </head>
 
-  <body onload="init()">
+  <body onload="init()" onkeydown="closeModalOrChangePekomenOnKeyDown(event)">
     <div id="safeArea">
       <!-- LOADING SCREEN -->
       <div id="loadingScreen" class="loadingScreen">
@@ -30,10 +30,10 @@
       </div>
 
       <!-- APP -->
-      <div id="appAfterStartLoading" class="appAfterStartLoading opacity1">
+      <div id="appAfterStartLoading" class="appAfterStartLoading opacity1" >
         <!-- LOGO -->
         <div class="logo">
-          <img class="logo" src="img/logo_pokemon.png" alt="pokemon logo" />
+          <img src="img/logo_pokemon.png" alt="pokemon logo" />
           <span>1st Generation</span>
         </div>
 
@@ -59,10 +59,10 @@
         </div>
 
       <!-- MODAL -->
-      <div id="modal" class="modal dn">
+      <div id="modal" class="modal dn" onclick="closeModal()">
 
         <!-- Modal Card -->
-        <div id="modalCard" class="modalCard">      
+        <div id="modalCard" class="modalCard" onclick="event.stopPropagation()">      
           <div id="modalCardBgTopBottom" class="modalCardBgTopBottom">
             
           <!-- Modal Cart BACKGROUND -->

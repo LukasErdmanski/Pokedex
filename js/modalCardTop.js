@@ -363,6 +363,6 @@ function highlightAndEnlarge_Arrow(element) {
   }
   changeArrowStyleIntervall = setTimeout(() => {
     element.classList.remove('mCTArrowClick');
-  }, 151);
+  }, 111);
 }
 //#endregion ============================== SET MODAL CARD TOP ==============================
